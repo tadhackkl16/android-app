@@ -101,7 +101,7 @@ repositories {
 dependencies {
     testCompile 'junit:junit:4.12'
 
-    compile 'com.android.support:multidex:+'
+    compile 'com.android.support:multidex:1.0.0'
 
     compile project(':restcomm.android.sdk')
     compile 'com.android.support:appcompat-v7:24.2.1'
