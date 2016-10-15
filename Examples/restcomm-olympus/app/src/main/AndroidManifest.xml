@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     -->
 
+
     <!-- This is needed for debug purposes only, to be able to store Jain SIP logs in external storage -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -109,6 +110,7 @@
         <activity
             android:name="org.restcomm.android.hack.activity.RegisterDeviceActivity"
             android:screenOrientation="portrait" />
+        <activity android:name="org.restcomm.android.hack.activity.ChatActivity"></activity>
     </application>
 
 </manifest>

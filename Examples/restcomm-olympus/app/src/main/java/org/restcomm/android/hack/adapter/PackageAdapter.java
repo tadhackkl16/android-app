@@ -1,6 +1,7 @@
 package org.restcomm.android.hack.adapter;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,26 +53,35 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageV
     @Override
     public void onBindViewHolder(PackageViewHolder holder, int position) {
         final MyPackage myPackage = this.packages.get(position);
-        holder.tv_name.setText(myPackage.getName());
-        holder.tv_description.setText(myPackage.getDescription());
-        holder.tv_description.setText(myPackage.getDevices());
-        holder.tv_hours.setText(myPackage.getHours());
+        holder.tv_name.setText("Name: " + myPackage.getName());
+        holder.tv_description.setText("Description: " + myPackage.getDescription());
+        holder.tv_devices.setText("Num of Devices: " + myPackage.getDevices());
+        holder.tv_hours.setText("Subscription Limit: " + myPackage.getHours() + " Hours");
 
-        holder.card_view.setOnClickListener(new View.OnClickListener() {
+        holder.llCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final UserInterface userInterface = adapter.create(UserInterface.class);
                 Auths dbAuth = Auths.getAuth();
+
+                final ProgressDialog progressDialog = new ProgressDialog(context);
+                progressDialog.setMessage("Please wait...");
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
                 BPurchase bPurchase = new BPurchase(myPackage.getId());
                 userInterface.purchase(dbAuth.accessToken, bPurchase, new CallbackInterface<User>(context) {
                     @Override
                     public void failure(RestError restError) {
+                        progressDialog.dismiss();
                         Log.e("error", restError.getCode() + "");
                         Toast.makeText(context, restError.getErrorDetails(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void success(User user, Response response) {
+                        progressDialog.dismiss();
                         Intent intent = new Intent(context, RegisterDeviceActivity.class);
                         context.startActivity(intent);
                         ((Activity) context).finish();
@@ -78,8 +89,6 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageV
                 });
             }
         });
-
-
     }
 
     @Override
@@ -89,18 +98,16 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageV
 
     public class PackageViewHolder extends RecyclerView.ViewHolder {
 
-        protected android.support.v7.widget.CardView card_view;
-
+        protected LinearLayout llCard;
         protected TextView tv_name;
         protected TextView tv_devices;
         protected TextView tv_hours;
         protected TextView tv_description;
 
-
         public PackageViewHolder(View itemView) {
             super(itemView);
 
-            card_view = (android.support.v7.widget.CardView) itemView.findViewById(R.id.card_view);
+            llCard = (LinearLayout) itemView.findViewById(R.id.llCard);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_devices = (TextView) itemView.findViewById(R.id.tv_devices);
             tv_hours = (TextView) itemView.findViewById(R.id.tv_hours);

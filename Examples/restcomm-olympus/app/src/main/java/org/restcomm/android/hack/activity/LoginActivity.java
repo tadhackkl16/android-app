@@ -115,8 +115,10 @@ public class LoginActivity extends AppCompatActivity {
                 authdb.save();
                 progressDialog.dismiss();
 
-                if (auth.getResponse().getMessage().getUser().getPackageId() != null && !auth.getResponse().getMessage().getUser().getPackageId().isEmpty()) {
-                    //Open something else
+                if (auth.getResponse().getMessage().getUser().getPackageId() != null) {
+                    Intent intent = new Intent(LoginActivity.this, RegisterDeviceActivity.class);
+                    startActivity(intent);
+                    finish();
                 } else {
                     Intent intent = new Intent(LoginActivity.this, PackagesActivity.class);
                     startActivity(intent);
@@ -128,11 +130,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isUserNameValid(String username) {
-        return username.length() > 4;
+        return username.length() > 2;
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() > 4;
+        return password.length() > 2;
     }
 
 }

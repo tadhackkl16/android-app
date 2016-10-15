@@ -5,4 +5,5 @@ package org.restcomm.android.hack.utils;
  */
 public class Static {
     public static String URL = "https://webrtc-hack.herokuapp.com";
+    public static String HUB = "tadhack.restcomm.com";
 }

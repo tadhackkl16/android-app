@@ -1,6 +1,8 @@
 package org.restcomm.android.hack.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -18,6 +20,9 @@ import org.restcomm.android.hack.model.User;
 import org.restcomm.android.hack.model.body.BRegister;
 import org.restcomm.android.hack.utils.Static;
 import org.restcomm.android.olympus.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.RestAdapter;
 import retrofit.client.Response;
@@ -69,6 +74,13 @@ public class RegisterDeviceActivity extends AppCompatActivity {
 
         Auths dbAuth = Auths.getAuth();
 
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+
         BRegister bRegister = new BRegister(deviceId);
 
         switch (type) {
@@ -76,13 +88,14 @@ public class RegisterDeviceActivity extends AppCompatActivity {
                 userInterface.registerDeviceMaster(dbAuth.accessToken, bRegister, new CallbackInterface<User>(this) {
                     @Override
                     public void failure(RestError restError) {
+                        progressDialog.dismiss();
                         Log.e("error", restError.getCode() + "");
                         Toast.makeText(RegisterDeviceActivity.this, restError.getErrorDetails(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void success(User user, Response response) {
-
+                        progressDialog.dismiss();
                     }
                 });
                 break;
@@ -90,13 +103,14 @@ public class RegisterDeviceActivity extends AppCompatActivity {
                 userInterface.registerDeviceSlave(dbAuth.accessToken, bRegister, new CallbackInterface<User>(this) {
                     @Override
                     public void failure(RestError restError) {
+                        progressDialog.dismiss();
                         Log.e("error", restError.getCode() + "");
                         Toast.makeText(RegisterDeviceActivity.this, restError.getErrorDetails(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void success(User user, Response response) {
-
+                        progressDialog.dismiss();
                     }
                 });
                 break;
@@ -118,8 +132,27 @@ public class RegisterDeviceActivity extends AppCompatActivity {
             @Override
             public void success(User user, Response response) {
                 String device = user.getResponse().getMessage().getUser().getDeviceId();
+                List<String> devices = user.getResponse().getMessage().getUser().getDevices();
                 if (device != null && !device.isEmpty()) {
                     btn_master.setVisibility(View.VISIBLE);
+                } else if(device == deviceId) {
+                    Intent intent = new Intent(RegisterDeviceActivity.this, ChatActivity.class);
+                    intent.putExtra("devices", (ArrayList<String>)devices);
+                    intent.putExtra("device", device);
+                    intent.putExtra("type", "master");
+                    startActivity(intent);
+                    finish();
+                } else {
+                    for (String dev : devices) {
+                        if (dev.contains(deviceId)) {
+                            Intent intent = new Intent(RegisterDeviceActivity.this, ChatActivity.class);
+                            intent.putExtra("devices", (ArrayList<String>)devices);
+                            intent.putExtra("device", dev);
+                            intent.putExtra("type", "slave");
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
                 }
             }
         });

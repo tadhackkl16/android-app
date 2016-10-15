@@ -118,4 +118,7 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+
+    compile group: 'org.jongo', name: 'jongo', version: '0.2'
+
 }

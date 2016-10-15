@@ -28,7 +28,7 @@ import javax.annotation.Generated;
 public class MyPackage {
 
     @JsonProperty("_id")
-    private String id;
+    private String _id;
     @JsonProperty("name")
     private String name;
     @JsonProperty("description")
@@ -45,15 +45,15 @@ public class MyPackage {
      */
     @JsonProperty("_id")
     public String getId() {
-        return id;
+        return _id;
     }
 
     /**
      * @param id The _id
      */
     @JsonProperty("_id")
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String _id) {
+        this._id = _id;
     }
 
     /**

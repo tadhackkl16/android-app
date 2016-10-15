@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ import javax.annotation.Generated;
 public class PackageMessage {
 
     @JsonProperty("packages")
-    private PackagesList packages;
+    private ArrayList<MyPackage> packages;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -32,7 +33,7 @@ public class PackageMessage {
      * @return The packages
      */
     @JsonProperty("packages")
-    public PackagesList getPackages() {
+    public ArrayList<MyPackage> getPackages() {
         return packages;
     }
 
@@ -40,7 +41,7 @@ public class PackageMessage {
      * @param packages The packages
      */
     @JsonProperty("packages")
-    public void setPackages(PackagesList packages) {
+    public void setPackages(ArrayList<MyPackage> packages) {
         this.packages = packages;
     }
 

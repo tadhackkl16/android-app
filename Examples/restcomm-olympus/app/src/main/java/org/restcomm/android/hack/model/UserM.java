@@ -24,19 +24,19 @@ import javax.annotation.Generated;
         "_id",
         "username",
         "password",
-        "package_id",
+        "packageId",
         "deviceId",
         "devices"
 })
 public class UserM {
 
     @JsonProperty("_id")
-    private String id;
+    private String _id;
     @JsonProperty("username")
     private String username;
     @JsonProperty("password")
     private String password;
-    @JsonProperty("package_id")
+    @JsonProperty("packageId")
     private String packageId;
     @JsonProperty("deviceId")
     private String deviceId;
@@ -46,19 +46,19 @@ public class UserM {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * @return The id
+     * @return The _id
      */
     @JsonProperty("_id")
     public String getId() {
-        return id;
+        return _id;
     }
 
     /**
-     * @param id The _id
+     * @param _id The _id
      */
     @JsonProperty("_id")
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String _id) {
+        this._id = _id;
     }
 
     /**
@@ -96,15 +96,15 @@ public class UserM {
     /**
      * @return The packageId
      */
-    @JsonProperty("package_id")
+    @JsonProperty("packageId")
     public String getPackageId() {
         return packageId;
     }
 
     /**
-     * @param packageId The package_id
+     * @param packageId The packageId
      */
-    @JsonProperty("package_id")
+    @JsonProperty("packageId")
     public void setPackageId(String packageId) {
         this.packageId = packageId;
     }
@@ -120,7 +120,7 @@ public class UserM {
     /**
      * @param deviceId The deviceId
      */
-    @JsonProperty("package_id")
+    @JsonProperty("packageId")
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }

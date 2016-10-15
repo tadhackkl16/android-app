@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import org.restcomm.android.hack.adapter.PackageAdapter;
@@ -45,6 +46,13 @@ public class PackagesActivity extends AppCompatActivity {
         packageAdapter = new PackageAdapter(this, myPackages);
         recycler_view_packages.setAdapter(packageAdapter);
 
+        recycler_view_packages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         getPackages();
     }
 
@@ -62,7 +70,7 @@ public class PackagesActivity extends AppCompatActivity {
 
             @Override
             public void success(Package aPackage, Response response) {
-                myPackages.addAll(aPackage.getResponse().getMessage().getPackages().getMyPackages());
+                myPackages.addAll(aPackage.getResponse().getMessage().getPackages());
                 packageAdapter.notifyDataSetChanged();
             }
         });
