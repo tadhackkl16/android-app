@@ -30,6 +30,7 @@ android {
             targetSdkVersion 24
             versionCode version
             versionName "1.0.0-BETA4"
+            multiDexEnabled true
         }
     } else {
         throw new GradleException("Could not read file olympus-version.properties")
@@ -99,6 +100,9 @@ repositories {
 
 dependencies {
     testCompile 'junit:junit:4.12'
+
+    compile 'com.android.support:multidex:+'
+
     compile project(':restcomm.android.sdk')
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:cardview-v7:24.2.1'
@@ -118,7 +122,5 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
-
-    compile group: 'org.jongo', name: 'jongo', version: '0.2'
 
 }

@@ -19,6 +19,7 @@ android {
             targetSdkVersion 24
             versionCode version
             versionName "1.0.0-BETA4"
+            multiDexEnabled true
         }
     }
     else {
