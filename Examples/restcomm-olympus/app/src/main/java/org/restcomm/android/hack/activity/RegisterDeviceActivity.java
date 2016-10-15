@@ -96,6 +96,10 @@ public class RegisterDeviceActivity extends AppCompatActivity {
                     @Override
                     public void success(User user, Response response) {
                         progressDialog.dismiss();
+                        String device = user.getResponse().getMessage().getUser().getDeviceId();
+                        List<String> devices = user.getResponse().getMessage().getUser().getDevices();
+
+                        move(device, devices);
                     }
                 });
                 break;
@@ -111,6 +115,10 @@ public class RegisterDeviceActivity extends AppCompatActivity {
                     @Override
                     public void success(User user, Response response) {
                         progressDialog.dismiss();
+                        String device = user.getResponse().getMessage().getUser().getDeviceId();
+                        List<String> devices = user.getResponse().getMessage().getUser().getDevices();
+
+                        move(device, devices);
                     }
                 });
                 break;
@@ -133,28 +141,34 @@ public class RegisterDeviceActivity extends AppCompatActivity {
             public void success(User user, Response response) {
                 String device = user.getResponse().getMessage().getUser().getDeviceId();
                 List<String> devices = user.getResponse().getMessage().getUser().getDevices();
-                if (device != null && !device.isEmpty()) {
-                    btn_master.setVisibility(View.VISIBLE);
-                } else if(device == deviceId) {
-                    Intent intent = new Intent(RegisterDeviceActivity.this, ChatActivity.class);
-                    intent.putExtra("devices", (ArrayList<String>)devices);
-                    intent.putExtra("device", device);
-                    intent.putExtra("type", "master");
-                    startActivity(intent);
-                    finish();
-                } else {
-                    for (String dev : devices) {
-                        if (dev.contains(deviceId)) {
-                            Intent intent = new Intent(RegisterDeviceActivity.this, ChatActivity.class);
-                            intent.putExtra("devices", (ArrayList<String>)devices);
-                            intent.putExtra("device", dev);
-                            intent.putExtra("type", "slave");
-                            startActivity(intent);
-                            finish();
-                        }
-                    }
-                }
+
+                move(device, devices);
             }
         });
+    }
+
+    private void move(String device, List<String> devices){
+
+        Intent intent = new Intent(RegisterDeviceActivity.this, ChatActivity.class);
+        intent.putExtra("devices", (ArrayList<String>)devices);
+        intent.putExtra("device", device);
+        if (device.isEmpty()) {
+            btn_master.setVisibility(View.VISIBLE);
+        } else if(device.equals(deviceId)) {
+            intent.putExtra("mine", device);
+            intent.putExtra("type", "master");
+            startActivity(intent);
+            finish();
+        } else {
+            for (String dev : devices) {
+                if (dev.contains(deviceId)) {
+                    intent.putExtra("mine", dev);
+                    intent.putExtra("type", "slave");
+                    startActivity(intent);
+                    finish();
+                }
+            }
+            btn_master.setVisibility(View.VISIBLE);
+        }
     }
 }

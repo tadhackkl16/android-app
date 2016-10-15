@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 authdb.save();
                 progressDialog.dismiss();
 
-                if (auth.getResponse().getMessage().getUser().getPackageId() != null) {
+                if (!auth.getResponse().getMessage().getUser().getPackageId().isEmpty()) {
                     Intent intent = new Intent(LoginActivity.this, RegisterDeviceActivity.class);
                     startActivity(intent);
                     finish();

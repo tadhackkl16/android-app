@@ -33,20 +33,26 @@ public class ChatActivity extends AppCompatActivity {
 
         final ArrayList<String> devices = getIntent().getStringArrayListExtra("devices");
         final String device = getIntent().getStringExtra("device");
+        final String mine = getIntent().getStringExtra("mine");
         String type = getIntent().getStringExtra("type");
 
-        if(type=="slave"){
+        if(type.equals("slave")){
             ll_slave.setVisibility(View.VISIBLE);
-            spinner.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,devices));
-            spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    callee = devices.get(i);
-                }
-            });
+            callee = device;
         } else {
             ll_master.setVisibility(View.VISIBLE);
-            callee = device;
+            spinner.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,devices));
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    callee = devices.get(i);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
         }
 
 
