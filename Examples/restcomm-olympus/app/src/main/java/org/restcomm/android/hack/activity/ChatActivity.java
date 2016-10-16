@@ -76,6 +76,7 @@ public class ChatActivity extends AppCompatActivity{
         prefEdit.putString(RCDevice.ParameterKeys.SIGNALING_USERNAME, mine);
         prefEdit.putString(RCDevice.ParameterKeys.SIGNALING_PASSWORD, "12345");
         prefEdit.putString(RCDevice.ParameterKeys.SIGNALING_DOMAIN, Static.HUB);
+        prefEdit.putString(RCDevice.ParameterKeys.SIGNALING_MINE, type);
         prefEdit.putStringSet(RCDevice.ParameterKeys.SIGNALING_USERNAME_RECIEVER, stringList);
         prefEdit.apply();
 

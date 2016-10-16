@@ -313,15 +313,6 @@ public class CallActivity extends AppCompatActivity implements RCConnectionListe
             connectParams.put(RCConnection.ParameterKeys.CONNECTION_VIDEO_ENABLED, intent.getBooleanExtra(RCDevice.EXTRA_VIDEO_ENABLED, false));
             connectParams.put(RCConnection.ParameterKeys.CONNECTION_LOCAL_VIDEO, findViewById(R.id.local_video_layout));
             connectParams.put(RCConnection.ParameterKeys.CONNECTION_REMOTE_VIDEO, findViewById(R.id.remote_video_layout));
-            // by default we use VP8 for video as it tends to be more adopted, but you can override that and specify VP9 or H264 as follows:
-            //connectParams.put(RCConnection.ParameterKeys.CONNECTION_PREFERRED_VIDEO_CODEC, "VP9");
-            //connectParams.put(RCConnection.ParameterKeys.CONNECTION_PREFERRED_VIDEO_CODEC, "H264");
-
-            // *** if you want to add custom SIP headers, please uncomment this
-            //HashMap<String, String> sipHeaders = new HashMap<>();
-            //sipHeaders.put("X-SIP-Header1", "Value1");
-            //connectParams.put(RCConnection.ParameterKeys.CONNECTION_CUSTOM_SIP_HEADERS, sipHeaders);
-
             handlePermissions(isVideo);
         }
         if (intent.getAction().equals(RCDevice.ACTION_INCOMING_CALL) ||
@@ -363,46 +354,25 @@ public class CallActivity extends AppCompatActivity implements RCConnectionListe
                 handlePermissions(true);
             }
         }
-        /* TODO: Issue #380: once we figure out the issue with the backgrounding we need to uncomment this
-        if (intent.getAction().equals(RCDevice.LIVE_CALL)) {
-            String text;
-            connection = device.getLiveConnection();
-            connection.setConnectionListener(this);
 
-            if (connection.isIncoming()) {
-                // Incoming
-                if (connection.getRemoteMediaType() == RCConnection.ConnectionMediaType.AUDIO_VIDEO) {
-                    text = "Video Call from ";
-                }
-                else {
-                    text = "Audio Call from ";
-                }
-            }
-            else {
-                // Outgoing
-                if (connection.getLocalMediaType() == RCConnection.ConnectionMediaType.AUDIO_VIDEO) {
-                    text = "Video Calling ";
-                }
-                else {
-                    text = "Audio Calling ";
-                }
-            }
+        if(prefs.getString(RCDevice.ParameterKeys.SIGNALING_MINE, "").equals("slave")) {
+            open();
+        }
+    }
 
-            lblCall.setText(text + connection.getPeer().replaceAll(".*?sip:", "").replaceAll("@.*$", ""));
-            lblStatus.setText("Connected");
-            connection.resumeVideo((PercentFrameLayout)findViewById(R.id.local_video_layout),
-                    (PercentFrameLayout)findViewById(R.id.remote_video_layout));
-
-            // Hide answering buttons and show mute & keypad
+    private void open(){
+        if (pendingConnection != null) {
+            lblStatus.setText("Answering Call...");
             btnAnswer.setVisibility(View.INVISIBLE);
             btnAnswerAudio.setVisibility(View.INVISIBLE);
-            btnMuteAudio.setVisibility(View.VISIBLE);
-            btnMuteVideo.setVisibility(View.VISIBLE);
-            btnKeypad.setVisibility(View.VISIBLE);
 
-            lblTimer.setVisibility(View.VISIBLE);
+            acceptParams = new HashMap<String, Object>();
+            acceptParams.put(RCConnection.ParameterKeys.CONNECTION_VIDEO_ENABLED, true);
+            acceptParams.put(RCConnection.ParameterKeys.CONNECTION_LOCAL_VIDEO, findViewById(R.id.local_video_layout));
+            acceptParams.put(RCConnection.ParameterKeys.CONNECTION_REMOTE_VIDEO, findViewById(R.id.remote_video_layout));
+            // Check permissions asynchronously and then accept the call
+            handlePermissions(true);
         }
-        */
     }
 
     // UI Events

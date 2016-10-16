@@ -149,6 +149,7 @@ public class RCDevice extends Service implements SignalingClient.SignalingClient
       public static final String SIGNALING_USERNAME = "pref_sip_user";
       public static final String SIGNALING_USERNAME_RECIEVER = "pref_sip_user_reciever";
       public static final String SIGNALING_DOMAIN = "pref_proxy_domain";
+      public static final String SIGNALING_MINE = "mine";
       public static final String SIGNALING_PASSWORD = "pref_sip_password";
       public static final String SIGNALING_SECURE_ENABLED = "signaling-secure";
       public static final String SIGNALING_LOCAL_PORT = "signaling-local-port";
