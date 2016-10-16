@@ -147,6 +147,7 @@ public class RCDevice extends Service implements SignalingClient.SignalingClient
       public static final String INTENT_INCOMING_CALL = "incoming-call-intent";
       public static final String INTENT_INCOMING_MESSAGE = "incoming-message-intent";
       public static final String SIGNALING_USERNAME = "pref_sip_user";
+      public static final String SIGNALING_USERNAME_RECIEVER = "pref_sip_user_reciever";
       public static final String SIGNALING_DOMAIN = "pref_proxy_domain";
       public static final String SIGNALING_PASSWORD = "pref_sip_password";
       public static final String SIGNALING_SECURE_ENABLED = "signaling-secure";

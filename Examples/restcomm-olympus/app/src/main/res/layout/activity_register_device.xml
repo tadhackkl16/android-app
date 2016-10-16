@@ -4,21 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="2"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context="org.restcomm.android.hack.activity.RegisterDeviceActivity">
 
     <Button
         android:id="@+id/btn_master"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:text="Master"
         android:visibility="gone" />
 
     <Button
         android:id="@+id/btn_slave"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:text="Slave" />
 </LinearLayout>

@@ -57,6 +57,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageV
         holder.tv_description.setText("Description: " + myPackage.getDescription());
         holder.tv_devices.setText("Num of Devices: " + myPackage.getDevices());
         holder.tv_hours.setText("Subscription Limit: " + myPackage.getHours() + " Hours");
+        holder.tv_price.setText("Subscription Price: " + myPackage.getPrice() + " MYR");
 
         holder.llCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +103,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageV
         protected TextView tv_name;
         protected TextView tv_devices;
         protected TextView tv_hours;
+        protected TextView tv_price;
         protected TextView tv_description;
 
         public PackageViewHolder(View itemView) {
@@ -111,6 +113,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageV
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_devices = (TextView) itemView.findViewById(R.id.tv_devices);
             tv_hours = (TextView) itemView.findViewById(R.id.tv_hours);
+            tv_price = (TextView) itemView.findViewById(R.id.tv_price);
             tv_description = (TextView) itemView.findViewById(R.id.tv_description);
         }
     }

@@ -23,7 +23,8 @@ import javax.annotation.Generated;
         "name",
         "description",
         "devices",
-        "hours"
+        "hours",
+        "price"
 })
 public class MyPackage {
 
@@ -37,6 +38,8 @@ public class MyPackage {
     private Integer devices;
     @JsonProperty("hours")
     private Integer hours;
+    @JsonProperty("price")
+    private Integer price;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -118,6 +121,22 @@ public class MyPackage {
     @JsonProperty("hours")
     public void setHours(Integer hours) {
         this.hours = hours;
+    }
+
+    /**
+     * @return The price
+     */
+    @JsonProperty("price")
+    public Integer getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price The price
+     */
+    @JsonProperty("price")
+    public void setPrice(Integer price) {
+        this.hours = price;
     }
 
     @JsonAnyGetter

@@ -67,6 +67,7 @@ public class RegisterDeviceActivity extends AppCompatActivity {
         WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         WifiInfo wInfo = wifiManager.getConnectionInfo();
         deviceId = wInfo.getMacAddress();
+        deviceId = deviceId.replace(":","");
     }
 
     private void registerDevice(String type) {
@@ -150,11 +151,12 @@ public class RegisterDeviceActivity extends AppCompatActivity {
     private void move(String device, List<String> devices){
 
         Intent intent = new Intent(RegisterDeviceActivity.this, ChatActivity.class);
-        intent.putExtra("devices", (ArrayList<String>)devices);
         intent.putExtra("device", device);
         if (device.isEmpty()) {
             btn_master.setVisibility(View.VISIBLE);
-        } else if(device.equals(deviceId)) {
+        } else if(device.contains(deviceId)) {
+            devices.add(device);
+            intent.putExtra("devices", (ArrayList<String>)devices);
             intent.putExtra("mine", device);
             intent.putExtra("type", "master");
             startActivity(intent);
@@ -162,6 +164,8 @@ public class RegisterDeviceActivity extends AppCompatActivity {
         } else {
             for (String dev : devices) {
                 if (dev.contains(deviceId)) {
+                    devices.add(device);
+                    intent.putExtra("devices", (ArrayList<String>)devices);
                     intent.putExtra("mine", dev);
                     intent.putExtra("type", "slave");
                     startActivity(intent);

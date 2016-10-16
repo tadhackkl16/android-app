@@ -26,9 +26,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.text.Html;
+import android.util.ArraySet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextMenu;
@@ -43,9 +46,14 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.restcomm.android.sdk.RCDevice;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.restcomm.android.olympus.ContactsController.CONTACT_KEY;
 import static org.restcomm.android.olympus.ContactsController.CONTACT_VALUE;
@@ -125,7 +133,20 @@ public class MainFragment extends ListFragment {
       Log.i(TAG, "%% onResume");
       super.onResume();
 
-      contactList = contactsController.retrieveContacts();
+
+      SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+
+
+      //contactList = contactsController.retrieveContacts();
+      contactList = new ArrayList<>();
+      HashMap<String, String> hash= new HashMap<String, String>();
+      Set<String> stringList = prefs.getStringSet(RCDevice.ParameterKeys.SIGNALING_USERNAME_RECIEVER, new HashSet<String>());
+      for (String s: stringList.toArray(new String[stringList.size()])) {
+         hash.put("sipuri", s);
+         hash.put("username", s);
+         contactList.add(hash);
+      }
 
       listViewAdapter = new ContactAdapter(getActivity().getApplicationContext(), contactList);
       setListAdapter(listViewAdapter);
