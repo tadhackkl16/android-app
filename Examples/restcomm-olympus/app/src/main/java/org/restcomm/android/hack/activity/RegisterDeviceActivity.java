@@ -153,6 +153,16 @@ public class RegisterDeviceActivity extends AppCompatActivity {
         Intent intent = new Intent(RegisterDeviceActivity.this, ChatActivity.class);
         intent.putExtra("device", device);
         if (device.isEmpty()) {
+            for (String dev : devices) {
+                if (dev.contains(deviceId)) {
+                    devices.add(device);
+                    intent.putExtra("devices", (ArrayList<String>)devices);
+                    intent.putExtra("mine", dev);
+                    intent.putExtra("type", "slave");
+                    startActivity(intent);
+                    finish();
+                }
+            }
             btn_master.setVisibility(View.VISIBLE);
         } else if(device.contains(deviceId)) {
             devices.add(device);
